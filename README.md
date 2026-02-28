@@ -8,7 +8,7 @@ A simple machine learning web application that predicts the risk of breast cance
 
 This project uses machine learning to predict whether a breast cancer patient is at **high risk** or **low risk** of cancer recurrence. The user enters patient details through a web form, and the trained model returns a prediction with a confidence probability.
 
-This is a **college mini-project** designed to demonstrate:
+This is a **mini-project** designed to demonstrate:
 - Data preprocessing and feature engineering
 - Training and comparing ML models
 - Building a web interface with Flask
