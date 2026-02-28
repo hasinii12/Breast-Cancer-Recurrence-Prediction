@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - Breast Cancer Recurrence</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Breast Cancer Recurrence Predictor</a>
+            <a href="/" class="btn btn-outline-light btn-sm">New Prediction</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Prediction Result</h1>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+
+        <!-- Row 1: Result + Input Summary -->
+        <div class="row justify-content-center mb-4">
+
+            <!-- Prediction Result -->
+            <div class="col-lg-6 mb-3">
+                <div class="result-box {{ risk_class }}">
+                    {% if risk_class == 'high' %}
+                        <h2 style="color: #721c24;">&#9888; {{ result }}</h2>
+                    {% else %}
+                        <h2 style="color: #155724;">&#10003; {{ result }}</h2>
+                    {% endif %}
+                    <p class="probability">{{ probability }}%</p>
+                    <p class="mb-0" style="color: #666;">Confidence Probability</p>
+                </div>
+            </div>
+
+            <!-- Input Summary -->
+            <div class="col-lg-4 mb-3">
+                <div class="input-summary h-100">
+                    <h5 class="mb-3" style="color: #c2185b;">Patient Input Summary</h5>
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ age }} years</td>
+                        </tr>
+                        <tr>
+                            <th>Tumor Size</th>
+                            <td>{{ tumor_size }} mm</td>
+                        </tr>
+                        <tr>
+                            <th>Lymph Nodes</th>
+                            <td>{{ lymph_nodes }}</td>
+                        </tr>
+                        <tr>
+                            <th>Tumor Grade</th>
+                            <td>Grade {{ tumor_grade }}</td>
+                        </tr>
+                        <tr>
+                            <th>Hormone Receptor</th>
+                            <td>{% if hormone_receptor == 1 %}Positive{% else %}Negative{% endif %}</td>
+                        </tr>
+                        <tr>
+                            <th>HER2 Status</th>
+                            <td>{% if her2_status == 1 %}Positive{% else %}Negative{% endif %}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Model Stats -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-value">{{ accuracy }}%</div>
+                            <div class="stat-label">Model Accuracy</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-value">{{ model_name }}</div>
+                            <div class="stat-label">Algorithm Used</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-value">{{ model_info.lr_accuracy }}%</div>
+                            <div class="stat-label">Logistic Regression</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <div class="stat-card">
+                            <div class="stat-value">{{ model_info.rf_accuracy }}%</div>
+                            <div class="stat-label">Random Forest</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Visualizations -->
+        <div class="row justify-content-center mb-4">
+
+            <!-- Confusion Matrix -->
+            <div class="col-lg-5 mb-3">
+                <div class="card">
+                    <div class="card-header bg-white text-center">
+                        <h6 class="mb-0" style="color: #c2185b;">Confusion Matrix</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename='confusion_matrix.png') }}"
+                             alt="Confusion Matrix" class="viz-img">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Importance -->
+            <div class="col-lg-5 mb-3">
+                <div class="card">
+                    <div class="card-header bg-white text-center">
+                        <h6 class="mb-0" style="color: #c2185b;">Feature Importance</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename='feature_importance.png') }}"
+                             alt="Feature Importance" class="viz-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4: Model Comparison -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-white text-center">
+                        <h6 class="mb-0" style="color: #c2185b;">Model Accuracy Comparison</h6>
+                    </div>
+                    <div class="card-body text-center">
+                        <img src="{{ url_for('static', filename='model_comparison.png') }}"
+                             alt="Model Comparison" class="viz-img">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-primary btn-lg px-5">Make Another Prediction</a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="mb-0">Breast Cancer Recurrence Prediction | College Mini Project | Built with Flask & Scikit-learn</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

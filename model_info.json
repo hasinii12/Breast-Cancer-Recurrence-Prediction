@@ -1,0 +1,8 @@
+{
+  "model_name": "Random Forest",
+  "accuracy": 92.11,
+  "lr_accuracy": 92.11,
+  "rf_accuracy": 92.11,
+  "training_samples": 455,
+  "testing_samples": 114
+}

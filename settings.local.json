@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python model_training.py:*)",
+      "Bash(pip install:*)",
+      "Bash(python -m pip install:*)",
+      "Bash(dir:*)",
+      "Bash(python -c:*)"
+    ]
+  }
+}

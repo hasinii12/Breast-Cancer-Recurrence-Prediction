@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breast Cancer Recurrence Prediction</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Breast Cancer Recurrence Predictor</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Breast Cancer Recurrence Prediction</h1>
+            <p>Enter the patient's tumor details below to predict the risk of cancer recurrence</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+                <!-- Input Form Card -->
+                <div class="card">
+                    <div class="card-header bg-white text-center py-3">
+                        <h5 class="mb-0" style="color: #c2185b;">Patient Information Form</h5>
+                    </div>
+                    <div class="card-body p-4">
+
+                        <form action="/predict" method="POST">
+
+                            <div class="row">
+                                <!-- Age -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="age" class="form-label">Age (years)</label>
+                                    <input type="number" class="form-control" id="age" name="age"
+                                           min="20" max="100" value="50" required>
+                                    <div class="form-text">Patient's age (20-100)</div>
+                                </div>
+
+                                <!-- Tumor Size -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="tumor_size" class="form-label">Tumor Size (mm)</label>
+                                    <input type="number" class="form-control" id="tumor_size" name="tumor_size"
+                                           min="1" max="100" step="0.1" value="20" required>
+                                    <div class="form-text">Size of the tumor in millimeters</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Lymph Nodes -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="lymph_nodes" class="form-label">Lymph Nodes Involved</label>
+                                    <input type="number" class="form-control" id="lymph_nodes" name="lymph_nodes"
+                                           min="0" max="30" value="0" required>
+                                    <div class="form-text">Number of lymph nodes with cancer (0-30)</div>
+                                </div>
+
+                                <!-- Tumor Grade -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="tumor_grade" class="form-label">Tumor Grade</label>
+                                    <select class="form-select" id="tumor_grade" name="tumor_grade" required>
+                                        <option value="1">Grade 1 - Low (Well differentiated)</option>
+                                        <option value="2" selected>Grade 2 - Medium (Moderately differentiated)</option>
+                                        <option value="3">Grade 3 - High (Poorly differentiated)</option>
+                                    </select>
+                                    <div class="form-text">How abnormal the cancer cells look</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!-- Hormone Receptor Status -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="hormone_receptor" class="form-label">Hormone Receptor (ER/PR)</label>
+                                    <select class="form-select" id="hormone_receptor" name="hormone_receptor" required>
+                                        <option value="1" selected>Positive</option>
+                                        <option value="0">Negative</option>
+                                    </select>
+                                    <div class="form-text">Estrogen/Progesterone receptor status</div>
+                                </div>
+
+                                <!-- HER2 Status -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="her2_status" class="form-label">HER2 Status</label>
+                                    <select class="form-select" id="her2_status" name="her2_status" required>
+                                        <option value="0" selected>Negative</option>
+                                        <option value="1">Positive</option>
+                                    </select>
+                                    <div class="form-text">HER2 protein overexpression status</div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg px-5">
+                                    Predict Recurrence Risk
+                                </button>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- Info Section -->
+                <div class="card mt-4">
+                    <div class="card-body p-4">
+                        <h5 style="color: #c2185b;">About This Tool</h5>
+                        <p class="mb-2">
+                            This tool uses a machine learning model to predict the likelihood of breast cancer
+                            recurrence based on tumor characteristics. It is built as an educational project
+                            and should <strong>not</strong> be used for actual medical decisions.
+                        </p>
+                        <ul class="mb-0">
+                            <li><strong>Dataset:</strong> Based on the Breast Cancer Wisconsin dataset (sklearn)</li>
+                            <li><strong>Algorithms:</strong> Logistic Regression & Random Forest (best model selected)</li>
+                            <li><strong>Input Features:</strong> Age, Tumor Size, Lymph Nodes, Grade, ER/PR, HER2</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer text-center">
+        <div class="container">
+            <p class="mb-0">Breast Cancer Recurrence Prediction | College Mini Project | Built with Flask & Scikit-learn</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
